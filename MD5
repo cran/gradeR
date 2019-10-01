@@ -1,10 +1,10 @@
-3bc3210114a92540913166ecd663a9a6 *DESCRIPTION
+459b7189e16401e3e09208d69a359065 *DESCRIPTION
 b62f140de7ea9d200bacaffaf72155be *LICENSE
 9e1d43314e019321781a7b765647e560 *NAMESPACE
-c81dcfc9fbaea941395599858a0fafab *NEWS.md
-3553bc6b35bb1af4b5ad28e5b6fe5c2c *R/grade.r
+c9743175e297fa081dbabe851146efe0 *NEWS.md
+d3b2b0a7f66199405f2aa110075b571c *R/grade.r
 e0ef681901465d24f47f9139cb2c086a *R/gradeR-package.R
-2ffde9e2f0a2af45e665ea42e4bc71b0 *README.md
+3d9e6ed6380934c3503b715bb9fdbea3 *README.md
 d8471aa69bb0a46abeea5b255198be17 *build/vignette.rds
 afce080af3530aab8f62ac494095372e *inst/doc/gradeR.R
 1fc70d7aa0bd06ad3ed5104ea1c34645 *inst/doc/gradeR.Rmd
@@ -25,5 +25,5 @@ d41d8cd98f00b204e9800998ecf8427e *tests/testthat/example2/assignment2_submission
 496a468828844339afc52f36f42d32f3 *tests/testthat/example2/assignment2_submissions/student1/hw1.R
 b763c9496fdbe8f730310703ce85a699 *tests/testthat/example2/assignment2_submissions/student2/myhw1.r
 fa1acd2135f0e71532c317e25cf18030 *tests/testthat/example2/grade_hw1.R
-a8a68bcb126f6a64c0871c1ca3ed53d7 *tests/testthat/test_calcGrades.r
+d9c02954dde83a994558e049f8988a17 *tests/testthat/test_calcGrades.r
 1fc70d7aa0bd06ad3ed5104ea1c34645 *vignettes/gradeR.Rmd

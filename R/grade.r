@@ -21,18 +21,33 @@ calcGrades <- function(submission_dir, your_test_file){
                       recursive = T, 
                       pattern = "\\.r$", 
                       ignore.case = T)
-  number_questions <- length(testthat::test_file(your_test_file, reporter = "minimal"))
+  number_questions <- length(testthat::test_file(your_test_file, 
+                                                 reporter = "minimal"))
   number_students <- length(paths)
   score_data <- data.frame("id" = vector(mode = "character", length = number_students), 
-                           matrix(data = "blank", nrow = number_students, 
+                           matrix(data = 0, nrow = number_students, 
                                   ncol = number_questions),
                            stringsAsFactors = F)
+  
   student_num <- 1
   for(path in paths ){
     
     # run student's submission
-    tmp_full_path <- paste(submission_dir, path, sep = "")    
-    source(tmp_full_path, environment())
+    tmp_full_path <- paste(submission_dir, path, sep = "")  
+    #source(tmp_full_path, environment())
+    tmp <- tryCatch({
+      source(tmp_full_path, environment())
+    }, error = function(e) {
+      
+      cat("Unable to run: ",  path, "\n")
+      cat("Error message: \n")
+      message(e)
+      cat("\n")
+    }, warning = function(w){
+      cat("Produced a warning: ", path, "\n")
+      message(w)
+      cat("\n")
+    })
     
     # test the student's submissions
     lr <- testthat::ListReporter$new()
@@ -49,9 +64,9 @@ calcGrades <- function(submission_dir, your_test_file){
       
       # TODO incorporate point values
       if(success){
-        score_data[student_num, q+1] <- "1"
+        score_data[student_num, q+1] <- 1
       }else{
-        score_data[student_num, q+1] <- "0"
+        score_data[student_num, q+1] <- 0
       }
     }
     
@@ -68,6 +83,7 @@ calcGrades <- function(submission_dir, your_test_file){
   
   # make the column names prettier before returning everything
   colnames(score_data)[-1] <-  paste("q", as.character(1:number_questions), sep = "")
+  
   return(score_data)
 }
 
