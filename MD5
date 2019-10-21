@@ -1,8 +1,8 @@
-2aec36f9e06ee29151d45090ba98f48f *DESCRIPTION
+7c9ed40d8b6d1e8432205e2b33bd2f50 *DESCRIPTION
 b62f140de7ea9d200bacaffaf72155be *LICENSE
 9e1d43314e019321781a7b765647e560 *NAMESPACE
-747a4bf2e44de44ca10a3e7d5a4b7e37 *NEWS.md
-d3b2b0a7f66199405f2aa110075b571c *R/grade.r
+8a0092b289aaa32ea17363b64442178a *NEWS.md
+5fa7cfa29d7cd7b61dd86209203c4348 *R/grade.r
 e0ef681901465d24f47f9139cb2c086a *R/gradeR-package.R
 cbb17df8392cd79773e9bfa208426385 *README.md
 d8471aa69bb0a46abeea5b255198be17 *build/vignette.rds
@@ -14,7 +14,7 @@ d41d8cd98f00b204e9800998ecf8427e *inst/extdata/example/assignment1_submissions/s
 8c670a909a27e9708b67510e0fde833a *inst/extdata/example/assignment1_submissions/student2/myhw1.r
 3984fe2145d0aabf32b782df0bbae5ea *inst/extdata/example/grade_hw1.R
 f9ee07635894eaa64f9f634edd6deb1c *inst/extdata/test_calcGrades.r
-263d86182e46aadda35661707ee57773 *man/calcGrades.Rd
+52e4fa74c4b4066369bf705eec0d0efe *man/calcGrades.Rd
 abf19e6f166dc236225b481dbfa085f5 *man/gradeR-package.Rd
 dd9a62c03433cd41594a6665941da624 *tests/testthat.R
 d41d8cd98f00b204e9800998ecf8427e *tests/testthat/example/assignment1_submissions/student1/hopefully_ignored.txt
@@ -25,7 +25,7 @@ d41d8cd98f00b204e9800998ecf8427e *tests/testthat/example2/assignment2_submission
 496a468828844339afc52f36f42d32f3 *tests/testthat/example2/assignment2_submissions/student1/hw1.R
 b763c9496fdbe8f730310703ce85a699 *tests/testthat/example2/assignment2_submissions/student2/myhw1.r
 fa1acd2135f0e71532c317e25cf18030 *tests/testthat/example2/grade_hw1.R
-d9c02954dde83a994558e049f8988a17 *tests/testthat/test_calcGrades.r
+940e4280dade9788e2afef1643d7120c *tests/testthat/test_calcGrades.r
 8a192492546b67adce2e9cc4a4bc9559 *vignettes/example/distributed_assignment/data.csv
 e7b4e7efb0aa22c4ceefbbd708f83372 *vignettes/example/distributed_assignment/fake_hw1.log
 1abc155cff08515f576537d26c4bcd4b *vignettes/example/distributed_assignment/fake_hw1.pdf
