@@ -341,13 +341,13 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <pre><code># I remembered to comment out setwd before I submitted :)
 # setwd(&quot;/Users/johndoe/i_am_a_student/STATS101/hw1/&quot;) 
 myDf &lt;- read.csv(&quot;dataset.csv&quot;)</code></pre>
-<p>In this way, their submissions will not require any intervention on the instructor’s part.</p>
+<p>In this way, their submissions will not require any intervention on the instructor’s part. If you would like to scan all of the student submissions for adherence to this rule, you can use the function <code>findGlobalPaths</code> (more on this later).</p>
 <p>Regarding 2., if they are reading in a data set that is different than the one you distributed to the class, their code will not be reproduced on your machine.</p>
 <p>Number 3. is more subtle. If you ask your students to, say, create a data frame with three columns called <code>myDataFrame</code>, and then, in a later question, you ask them to overwrite that data frame by adding a fourth column to it, you, the instructor, will not be able to test the initial data frame with three columns. This is due to how <code>calcGrades</code> works–it runs/<code>source</code>s the entire student script from start to finish, and then applies the tests. It does not intermittently run tests sprinkled inside a student submission. You should also remind the students not to accidentally overwrite variables.</p>
 </div>
 <div id="how-do-i-write-tests" class="section level2">
 <h2>How Do I Write Tests?</h2>
-<p>This package relies on that <a href="https://testthat.r-lib.org/"><code>testthat</code> package</a>. <code>gradeR</code> makes use of <code>testthat</code>’s <a href="https://testthat.r-lib.org/reference/index.html">“expectations”</a>. Most of the time you will be testing if certain variables are what you expect them to be.</p>
+<p>This package relies on the <a href="https://testthat.r-lib.org/"><code>testthat</code> package</a>. <code>gradeR</code> makes use of <code>testthat</code>’s <a href="https://testthat.r-lib.org/reference/index.html">“expectations”</a>. Most of the time you will be testing if certain variables are what you expect them to be.</p>
 <p>Say for instance, you ask a student to create a variable called <code>a</code>. This variable will be the result of some process they are supposed to figure out. You, the instructor, having completed the assignment yourself, know that the correct answer is <code>3</code>. So, this question could have the following test:</p>
 <pre><code>test_that(&quot;1.1a&quot;,{
   expect_true(a == 3)
@@ -437,6 +437,10 @@ submissionDir &lt;- &quot;../submissions/&quot;
 grades &lt;- calcGrades(submission_dir = submissionDir, 
                      your_test_file = &quot;~/this/should/be/your/correct/path/assignment1_grading_file.r&quot;)</code></pre>
 <p>From there, you can do whatever you want. For instance, you can take the sum/average of all the questions they get correct, weight different questions by different amounts, apply a curve, calculate which percentage of students got each question correct, make histograms of the grades, etc.</p>
+</div>
+<div id="some-extra-functions" class="section level2">
+<h2>Some Extra Functions</h2>
+<p>Currently, there are two other functions in this package: <code>findGlobalPaths</code> and <code>findBadEncodingFiles</code>. After you have provided a submission directory, these functions will find all student submissions (files that end with <code>.R</code> or <code>.r</code>) and scan every line to see if there are any problems. Specifically, they will check for 1.) if any file refers to global/machine-specific file paths, and 2.) if any file has unreadable characters (non-UTF-8). In my experience, these are the two most common problems with student submissions. The second problem often arises when students copy/paste code from strange text editors, or when their keyboards type in multiple languages.</p>
 </div>
 
 
