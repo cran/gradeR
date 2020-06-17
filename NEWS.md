@@ -1,3 +1,11 @@
+# gradeR 1.0.7
+
+## Bug fixes
+
+Fixed the multiple assertions bugs in `calcGrades` and `calcGradesForGradescope`. If one test had multiple calls to some expect function, all but the first would be ignored. Now, they are all tested, and full points are awarded if and only if they are all true. Thanks to Al Fischer of WCU for spotting this!
+
+Two bugs in the vignette were fixed as well. `data.csv` needed to be in the local directory from where calcGrades is called, and there shouldn't be any `setwd()` calls in the test file. 
+
 # gradeR 1.0.6
 
 ## Extra things
@@ -10,7 +18,7 @@
 ## Extra things
 
 - added `findGlobalPaths`, which searches student submissions for the very bad global/machine-specific file paths
-- added `findBadEncodingFiles`, which searchs student submissions for the very bad non-UTF-8 characters
+- added `findBadEncodingFiles`, which searches student submissions for the very bad non-UTF-8 characters
 - added a `verbose` argument to `calcGrades`, so you can see which file is being ran in real time
 
 # gradeR 1.0.4

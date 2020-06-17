@@ -1,7 +1,5 @@
 library(testthat)
 
-setwd("~/path/to/where/dataset/is/")
-
 # first test
 test_that("first", {
   
@@ -19,8 +17,8 @@ test_that("second", {
 
 # third test
 test_that("third", {
+  
 
-  expect_equal(nrow(myDataFrame), 2)
   expect_equal(myDataFrame[1,1], 700.01, tolerance=1e-3)
-
+  expect_equal(nrow(myDataFrame), 2)
 })
