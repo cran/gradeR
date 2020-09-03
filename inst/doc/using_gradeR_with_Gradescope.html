@@ -14,6 +14,22 @@
 
 <title>Using gradeR with Gradescope</title>
 
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
 
 
 
@@ -228,7 +244,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>The autograding code for each Gradescope assignment is comprised of several files. <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder">This repository</a> has provided all of these files in the directory <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder/tree/master/autograding_code_and_data">autograding_code_and_data</a>.</p>
 <ol style="list-style-type: decimal">
 <li><p><code>setup.sh</code> is a Linux Bash script that the Gradescope servers run to install <code>R</code> and any <code>R</code> packages that are required. For those of you have little to no experience with shell scripting, do not despair! This <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder">repository</a> provides an example file <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder/blob/master/autograding_code_and_data/setup.sh">(see here)</a> that will be easy to modify. Note that the name of this file must be <code>setup.sh</code> because that is what Gradescope expects.</p></li>
-<li><p>The file with all of the tests. This can have any name you want, and it will usually change depending on what assignment you’re grading. In this example, we call it <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder/blob/master/autograding_code_and_data/assignment1_tests.r"><code>assignment1_grading_file.r</code></a>. This file contains <code>testthat</code> tests, which is another <code>R</code> package that <code>gradeR</code> depends on. The example should be pretty self explanatory, but for those looking for more detail, see the original <code>gradeR</code> vignette, or the documentation for the <a href="https://testthat.r-lib.org/"><code>testthat</code> package</a>. Note that by default, each test case has its visibility set to “hidden.” If you would like a test to be visible to the students, make sure to include the phrase “(visible)” in the name of the particular test.</p></li>
+<li><p>The file with all of the tests. This can have any name you want, and it will usually change depending on what assignment you’re grading. In this example, we call it <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder/blob/master/autograding_code_and_data/assignment1_tests.r"><code>assignment1_grading_file.r</code></a>. This file contains <code>testthat</code> tests, which is another <code>R</code> package that <code>gradeR</code> depends on. The example should be pretty self explanatory, but for those looking for more detail, see the original <code>gradeR</code> vignette, or the documentation for the <a href="https://testthat.r-lib.org/"><code>testthat</code> package</a>. Note that by default, each test case has its visibility set to “after_due_date.” If you would like a test to be visible to the students before the deadline has passed, make sure to include the phrase <code>(visible)</code> in the name of the particular test. Other options include <code>(hidden)</code> and <code>(after_published)</code>. For more information on visibility options, see the Gradescope documentation available <a href="https://gradescope-autograders.readthedocs.io/en/latest/specs/#output-format">here.</a></p></li>
 <li><p>The <code>.R</code> file that grades a single student submission. This can be named anything you want, too, but we call it <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder/blob/master/autograding_code_and_data/grade_one_submission.r"><code>grade_one_submission.r</code></a>. Thanks to <code>gradeR</code>, this one is pretty simple–it just calls <code>gradeR::calcGradesForGradescope()</code>. This function runs a single student’s <code>.R</code> file submission, checks it against the provided <code>testthat</code> tests, and nicely formats the output in a way that Gradescope expects.</p></li>
 <li><p><code>run_autograder</code> is another Bash script that Gradescope’s Linux servers run. This file must have this name, because Gradescope expects this. This small program is run every time a single student submission needs to be graded. It copies a single student submission into the directory that the Gradescope server expects, and then it runs the previously-mentioned file (<code>grade_one_submission.R</code>).</p></li>
 <li><p>Extra data files need to be included too. For example, our example homework assignment asked students to read in the file called <code>data.csv</code>. This particular csv file can be found in our <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder/tree/master/autograding_code_and_data">directory with all the other autograding files</a>.</p></li>
@@ -248,7 +264,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <li><p>Make sure your assignment instructions feature the same warnings in our example assignment <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder/blob/master/example_hw_assignment/fake_hw1.pdf">here.</a> This isn’t absolutely required, but it is helpful for the students.</p></li>
 <li><p>Make sure your <code>setup.sh</code> installs all packages that student code requires.</p></li>
 <li><p>Make sure <code>run_autograder</code> uses the correct filenames. The directories are what Gradescope expects, so don’t change those.</p></li>
-<li><p>Double check your test visibilities. Remember, by default all tests are hidden from students. If you would like a test to be visible, just insert the phrase “(visible)” into the name of the test file. For example, that is done on the first test <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder/blob/master/autograding_code_and_data/assignment1_tests.r">here.</a>.</p></li>
+<li><p>Double check your test visibilities. Remember, by default all tests are only shown after the due date has passed. If you would like a test to be visible, just insert the phrase “(visible)” into the name of the test file. For example, that is done on the first test <a href="https://github.com/tbrown122387/Using-gradeR-for-the-Gradescope-Autograder/blob/master/autograding_code_and_data/assignment1_tests.r">here.</a>. Personally, I usually make a few of the easy tests visible, just to make sure that students know before the deadline that “Gradescope” was able to run their script successfully.</p></li>
 <li><p>Make sure the max score you enter on Gradescope is the same as the total number of tests you have.</p></li>
 </ol>
 </div>

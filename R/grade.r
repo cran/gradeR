@@ -110,7 +110,7 @@ calcGrades <- function(submission_dir, your_test_file, suppress_warnings = TRUE,
     
     # run student's submission
     tmp_full_path <- paste(submission_dir, path, sep = "")  
-    testEnv <- new.env()
+    testEnv <- new.env(parent = globalenv())
     if(suppress_warnings){
       tryCatch({
         if(verbose)
@@ -187,9 +187,13 @@ calcGrades <- function(submission_dir, your_test_file, suppress_warnings = TRUE,
 #' @param submission_file the name of the assignment submission file (e.g. "hw1.r")
 #' @param test_file the name of the .r file with test_that tests (e.g. "hw1_tests.R")
 #' @param which_results Choose either "testing" or "gradescope" If equal to "gradescope" then the json file is written out to the directory that Gradescope expects. Otherwise, results.json is written to your current working directory.
+#' @param suppress_warnings If FALSE, warnings are fatal; if set to TRUE, then warnings will not prematurely terminate running of student submission scripts. 
 #' @keywords calcGradesForGradescope Gradescope 
 #' @export
-calcGradesForGradescope <- function(submission_file, test_file, which_results = "gradescope"){
+calcGradesForGradescope <- function(submission_file, 
+                                    test_file, 
+                                    which_results = "gradescope",
+                                    suppress_warnings = TRUE){
   
   if(!(which_results %in% c("gradescope", "testing")))
     stop("argument which_filename incorrectly specified")
@@ -204,21 +208,45 @@ calcGradesForGradescope <- function(submission_file, test_file, which_results = 
     stop("you need at least one graded question")
   
   # run student's submission in a separate environment
-  testEnv <- new.env()
+  testEnv <- new.env(parent = globalenv())
   
   # source each assignment
-  tryCatch(source(submission_file, testEnv),  error = function(c) c, warning = function(c) c ,message = function(c) c)
+  if(suppress_warnings){
+    suppressWarnings(
+      tryCatch(source(submission_file, testEnv),  
+               error = function(c) c, 
+               warning = function(c) c,
+               message = function(c) c)
+    )
+  }else{
+    tryCatch(source(submission_file, testEnv),  
+             error = function(c) c, 
+             warning = function(c) c,
+             message = function(c) c)
+  }
   
   # test the student's submissions
   # for the time being, each test is worth one point
   lr <- testthat::ListReporter$new()
-  out <- testthat::test_file(test_file, reporter = lr, env = testEnv)
+  out <- testthat::test_file(test_file, 
+                             reporter = lr, 
+                             env = testEnv)
   tests <- list()
   tests[["tests"]] <- list()
   raw_results <- lr$results$as_list()
   for(i in 1:number_tests){
     test_name <- raw_results[[i]]$test
-    test_visibility <- ifelse(grepl("\\(visible\\)", test_name), "visible", "hidden") # search for the exact phrase (visible)
+    if(  grepl("\\(visible\\)", test_name) ){
+        test_visibility <- "visible"
+    }else if( grepl("\\(hidden\\)", test_name) ){
+        test_visibility <- "hidden"
+    }else if(  grepl("\\(after_due_date\\)", test_name) ){
+        test_visibility <- "after_due_date"
+    }else if( grepl("\\(after_published\\)", test_name) ){
+        test_visibility <- "after_published"
+    }else{
+        test_visibility <- "after_due_date"
+    }
     test_max_score <- 1 # TODO generalize
     assertionResults <- raw_results[[i]]$results
     success <- all(sapply(assertionResults, methods::is, "expectation_success"))
