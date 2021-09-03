@@ -4,12 +4,12 @@
 # gradeR
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 The goal of `gradeR` is to help grade bunches of `R` script assignment
-submissions. This package has one function called `calcGrades()`, and
-much of the testing functionality is taken from the `testthat` package.
+submissions. This package has two primary functions called
+`calcGrades()` and `calcGradesForGradescope`, and much of the testing
+functionality is taken from the `testthat` package.
 
 ## Installation
 
@@ -20,7 +20,7 @@ You can install the released version of `gradeR` from
 install.packages("gradeR")
 ```
 
-You can install the development version of `gradeR` from with:
+You can install the development version of `gradeR` with:
 
 ``` r
 # install.packages("devtools")
@@ -32,7 +32,7 @@ devtools::install_github("tbrown122387/gradeR")
 This is a basic overview which shows you how to grade a bunch of
 assignment submissions. Make sure to change the paths to ones that
 actually exist on your machine. For more details on this example, see
-the [vignette](https://cran.r-project.org/package=gradeR/vignettes/gradeR.html).
+the vignette.
 
 ``` r
 # load in the package
@@ -57,14 +57,19 @@ file you must create on your own. For more information on how to write
 
 It might be beneficial to recommend that your students:
 
-  - clear out their workspace and `source` their `.R` submissions before
+-   clear out their workspace and `source` their `.R` submissions before
     submitting them. This makes sure everything runs as expected (at
     least on their machine).
-  - to not rename files that are read in as data, or change any raw data
+-   to not rename files that are read in as data, or change any raw data
     files on *their* hard drives. If they forget to abide by this rule,
     you will have to edit their submission and rename file names in
     their script.
-  - to not use global file paths (have them interactively use `setwd()`,
+-   to not use global file paths (have them interactively use `setwd()`,
     and then read in files using only their name). If they forget to do
     this, then you will need to change all of the global paths to local
     paths on their machine.
+
+## Contributing
+
+Please see `CONTRIBUTING.md` for more information on how you can
+contribute to this project!
